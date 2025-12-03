@@ -1,0 +1,13 @@
+#root {
+  max-width: 90vw;
+  margin: 0 auto;
+  text-align: center;
+}
+
+header {
+  top: 0px;
+  width: 90vw;
+  color: white;
+  background-color: black;
+}
+

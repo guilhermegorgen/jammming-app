@@ -1,0 +1,18 @@
+.mainDiv {
+    display: flex;
+    height: 1000px;
+}
+
+.listDiv {
+    width: 50%;
+    box-shadow: black 2px 2px;
+    border-radius: 2%;
+    margin-right: 0.5rem;
+}
+
+.playlistDiv {
+    box-shadow: black 2px 2px;
+    border-radius: 2%;
+    width: 50%;
+    margin-left: 1px;
+}
