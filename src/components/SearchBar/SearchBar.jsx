@@ -5,7 +5,7 @@ function SearchBar() {
     //handle input change
     const [inputValue, setInputValue] = useState("Enter A Song, Album, or Artist");
 
-    const result = [];
+    let result = [];
     
     function handleChange({target}){
         setInputValue(target.value);
