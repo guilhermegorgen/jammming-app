@@ -39,7 +39,7 @@ function SearchBar() {
         //GET to request user search
         const getData = async () => {
             //get the access token
-            const token = await getAcessToken;
+            const token = await getAcessToken();
 
             //Information to reach API
             const url = "https://api.spotify.com/v1/search?q=";
