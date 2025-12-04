@@ -59,7 +59,7 @@ function SearchBar() {
 
     return (
         <>
-            <form className={styles.form}>
+            <form method="POST" className={styles.form}>
                 <input className={styles.inputText} onChange={handleChange} type="text" placeholder={inputValue} />
                 <input className={styles.inputSubmit} type="submit" onSubmit={handleSubmit} value='SEARCH' />
             </form>
