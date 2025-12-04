@@ -25,7 +25,7 @@ function SearchBar() {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-type': 'application/json',
+                        'Content-type': 'application/x-www-form-urlencoded value',
                     },
                     body: data
                 });
