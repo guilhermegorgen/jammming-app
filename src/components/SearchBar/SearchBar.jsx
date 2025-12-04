@@ -12,7 +12,7 @@ function SearchBar() {
     }
 
     //handle submit search
-    function handleSubmit(inputValue){
+    function handleSubmit({target}){
         //Request an access token
         const getAcessToken = async () => {
             //Infos to reach the API
@@ -44,7 +44,7 @@ function SearchBar() {
             //Information to reach API
             const url = "https://api.spotify.com/v1/search?q=";
             const params = "&type=track&limit=10"
-            const endpoint = url + inputValue + params;
+            const endpoint = url + target.value + params;
             try {
                 const response = await fetch(endpoint, {
                     header: `Authorization: ${token.token_type} ${token.access_token}`});
