@@ -44,7 +44,7 @@ function SearchBar() {
 
             //Information to reach API
             const url = "https://api.spotify.com/v1/search?q=";
-            const params = "&type=track&limit=10"
+            const params = "&type=TRACK&limit=10"
             const endpoint = url + target.value + params;
             try {
                 const response = await fetch(endpoint, {
