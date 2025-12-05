@@ -45,9 +45,10 @@ function SearchBar() {
             console.log(token.token_type, token.access_token);
 
             //Information to reach API
-            const url = "https://api.spotify.com/v1/search?q=";
-            const params = "&type=TRACK&limit=10"
-            const endpoint = url + inputValue + params;
+            const url = "https://api.spotify.com/v1/search?";
+            const params = "type=TRACK&limit=10"
+            const endpoint = `&q=${inputValue}`
+            const acessUrl = url + params + endpoint;
             try {
                 const response = await fetch(endpoint, {
                     header: `Authorization: ${token.token_type} ${token.access_token}`});
