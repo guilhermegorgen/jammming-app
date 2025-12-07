@@ -21,7 +21,6 @@ const SearchBar = (props) => {
                     SEARCH
                 </button>
             </div>
-            <SearchResults result={result} />
         </>
     )
 }

@@ -1,6 +1,6 @@
 import Track from './components/Track/Track.jsx';
 
-const Tracklist = (props) => {
+const TrackList = (props) => {
     return (
         <>
             <div>
@@ -19,3 +19,5 @@ const Tracklist = (props) => {
         </>
     )
 }
+
+export default TrackList;
