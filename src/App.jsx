@@ -3,7 +3,7 @@ import './App.css'
 import Header from './components/Header/Header.jsx';
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import SearchResults from './components/SearchResults/SearchResults.jsx'
-import Playlist from './components/SearchBar/SearchBar.jsx'
+import Playlist from './components/Playlist/Playlist.jsx'
 import Spotify from './Spotify.js';
 
 
