@@ -2,38 +2,20 @@ import { useState } from 'react';
 import styles from './Playlist.module.css';
 
 function Playlist(props) {
-    //Playlist name changes
-    const [name, setName] = useState('Set your playlist name here');
-
-    const handleChange = ({target}) => {
-        setName(target.value);
-    };
+    const handleNameChange = useCallback(({target}) => {
+        props.onNameChange(target.value);
+    }, [props.onNameChange]);
     
-    //button to remove song of playlist
-    const [playlist, setPlaylist] = useState([props]);
-    const removeOfPlaylist = ({target}) => {
-        const selectedSong = target.value;
-        setPlaylist((prev) => {
-            if(prev.includes(selectedSong))
-                return prev.filter(song => song !== selectedSong)
-        })
-
-    }
     return (
         <>
             <div>
-                <input className={styles.inputText} onChange={handleChange} type="text" value={name} />
-                <ul>
-                    {playlist.forEach(song => {(
-                         <li>
-                            <h6>{playlist.music}</h6>
-                            <span>{playlist.artist}</span>
-                            <span>{playlist.album}</span>
-                            <button onClick={removeOfPlaylist}>+</button>
-                        </li>
-                    )})}
-                </ul>
-                <button className={styles.saveButton}>SAVE</button>
+                <input className={styles.inputText} onChange={handleNameChange} defaultValue={'Set you playlist name here'} />
+                <TrackList 
+                    tracks={props.playlistTracks}
+                    isRemoval={true}
+                    onRemove={props.onRemove}
+                />
+                <button className={styles.saveButton} onClick={props.onSave}>SAVE</button>
             </div>
         </>
     )

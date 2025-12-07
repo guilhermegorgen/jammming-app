@@ -1,72 +1,26 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
 import styles from './SearchBar.module.css';
-function SearchBar() {
-    //handle input change
-    const [inputValue, setInputValue] = useState("Enter A Song, Album, or Artist");
 
-    let result = [];
+const SearchBar = (props) => {
+    const [term, setTerm] = useState("");
     
-    function handleChange({target}){
-        setInputValue(target.value);
-    }
+    const handleTermChange = useCallback(({target}) => {
+        setTerm(target.value);
+    });
 
-    //handle submit search
-    function handleSubmit(inputValue){
-        //Request an access token
-        const getAcessToken = async () => {
-            //Infos to reach the API
-            const url = "https://accounts.spotify.com/api/token";
-            const clientID = "e27bcceb0b7643ea9fb07295db107f0e";
-            const clientSecret = "6579cea59aae4d5195ad8191cdaea1e3";
-            const data = `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`;
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/x-www-form-urlencoded',
-                    },
-                    body: data
-                });
-                if(response.ok){
-                    const jsonResponse = await response.json();
-                    console.log(jsonResponse);
-                    return jsonResponse;
-                }
-            } catch(error){console.log(error)}
-        }
-    
-        //GET to request user search
-        const getData = async () => {
-            //get the access token
-            const token = await getAcessToken();
-
-            console.log(token.token_type, token.access_token);
-
-            //Information to reach API
-            const url = "https://api.spotify.com/v1/search?";
-            const params = "type=TRACK&limit=10"
-            const endpoint = `&q=${inputValue}`
-            const acessUrl = url + params + endpoint;
-            try {
-                const response = await fetch(endpoint, {
-                    header: `Authorization: ${token.token_type} ${token.access_token}`});
-                if(response.ok){
-                    const jsonResponse = await jsonResponse.json()
-                    return jsonResponse
-                }
-            } catch(error) {console.log(error)};
-        };
-        return result = getData;
-    }
+    const search = useCallback(() => {
+        props.onSearch(term);
+    }, [props.onSearch, term]);
 
     return (
         <>
-            <form method="POST" className={styles.form}>
-                <input className={styles.inputText} onChange={handleChange} type="text" placeholder={inputValue} />
-                <input className={styles.inputSubmit} type="submit" onSubmit={handleSubmit} value='SEARCH' />
-            </form>
+            <div className={styles.form}>
+                <input className={styles.inputText} onChange={handleTermChange} placeholder={term} />
+                <button className={styles.inputSubmit} onClick={search}>
+                    SEARCH
+                </button>
+            </div>
             <SearchResults result={result} />
         </>
     )
