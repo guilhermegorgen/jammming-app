@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import SearchResults from '../SearchResults/SearchResults';
 import styles from './SearchBar.module.css';
 
 const SearchBar = (props) => {
@@ -22,7 +21,7 @@ const SearchBar = (props) => {
                 </button>
             </div>
         </>
-    )
+    );
 }
 
 export default SearchBar;
