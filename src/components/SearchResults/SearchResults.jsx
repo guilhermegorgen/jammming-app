@@ -1,4 +1,4 @@
-import TrackList from "./TrackList/TrackList.jsx";
+import TrackList from "../TrackList/TrackList.jsx";
 
 
 function SearchResults(props) {
