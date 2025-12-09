@@ -1,7 +1,7 @@
-import { useState } from 'react';
+
 import styles from './Playlist.module.css';
 
-function Playlist(props) {
+const Playlist = (props) => {
     const handleNameChange = useCallback(({target}) => {
         props.onNameChange(target.value);
     }, [props.onNameChange]);
