@@ -1,4 +1,4 @@
-import Track from './components/Track/Track.jsx';
+import Track from '../Track/Track.jsx';
 
 const TrackList = (props) => {
     return (
