@@ -11,15 +11,9 @@ const Spotify = {
         const clientPoint = `client_id=${clientId}`;
         const responseType = `response_type=code`;
         const scope = 'user-read-private user-read-email';
-        const url = `${endpoint}&${clientPoint}&${responseType}&${redirectUri}&scope=${scope}`;
-        
-        try {
-            if(accessToken){
-                return accessToken;
-            } else {
-                return window.location = url;
-            }
-        } catch(e) {console.log(e)}  
+        const url = `${endpoint}${clientPoint}&${responseType}&${redirectUri}&scope=${scope}`;
+
+        return window.location = url;
     },
 
     getAccessToken() {
