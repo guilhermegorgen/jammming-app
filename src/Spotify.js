@@ -2,7 +2,7 @@ const { Buffer } = require('node:buffer');
 
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
 const clientSecret = "6579cea59aae4d5195ad8191cdaea1e3";
-const redirectUri = "http://127.0.0.1:8888/callback";
+const redirectUri = "redirect_uri=http://127.0.0.1:8888/callback";
 let accessToken;
 
 const Spotify = {
@@ -10,8 +10,7 @@ const Spotify = {
         const endpoint = "https://accounts.spotify.com/authorize?";
         const clientPoint = `client_id=${clientId}`;
         const responseType = `response_type=code`;
-        const redirectPoint = `redirect_uri=${redirectUri}`;
-        const url = endpoint + clientPoint + responseType + redirectPoint;
+        const url = endpoint + clientPoint + responseType + redirectUri;
         
         try {
             if(accessToken){
