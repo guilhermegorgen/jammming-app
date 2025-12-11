@@ -16,7 +16,7 @@ const Spotify = {
         return window.location = url;
     },
 
-    getAccessToken() {
+    async getAccessToken() {
         Spotify.getUserAuhtorization();
         const urlParams = new URLSearchParams(window.location);
         const code = urlParams.get('code');
@@ -24,7 +24,7 @@ const Spotify = {
         const grantType = "authrization_code";
         const data = JSON.stringify({garant_type: grantType, code: code, redirect_uri: redirectUri})
         
-        const response = fetch(url, {
+        const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -34,20 +34,20 @@ const Spotify = {
 
         });
 
-        const jsonResponse = response.json();
+        const jsonResponse = await response.json();
         return jsonResponse 
     },
 
-    search(term){
+    async search(term){
         const getAccessInformations = Spotify.getAccessToken();
         const accessToken = getAccessInformations.access_token;
-        const response = fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
             methdod: 'GET',
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         });
-        const jsonResponse = response.json();
+        const jsonResponse = await response.json();
         if (!jsonResponse.tracks) {
             return [];
         }
@@ -65,7 +65,7 @@ const Spotify = {
             return;
         }
 
-        const accessToken = Spotify.getAcessToken();
+        const accessToken = Spotify.getAccessToken();
         const headers = { Authorization: `Bearer ${accessToken}` };
         let userId;
 
