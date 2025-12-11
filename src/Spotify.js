@@ -1,5 +1,5 @@
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
-const redirectUri = "http://127.0.0.1:8888/callback";
+const redirectUri = "https://guilhermegorgen.github.io/jammming-app/callback";
 let accessToken;
 
 const Spotify = {
@@ -17,7 +17,7 @@ const Spotify = {
             window.history.pushState('Access Token', null, '/');
             return accessToken;
         } else {
-            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public`;
+            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
             window.location = accessUrl;
         }
     },
