@@ -3,7 +3,7 @@ const redirectUri = "http://127.0.0.1:8888/callback";
 let accessToken;
 
 const Spotify = {
-    getAcessToken(){
+    getAccessToken(){
         if(accessToken){
             return accessToken;
         }
@@ -12,6 +12,7 @@ const Spotify = {
         const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
         if (accessTokenMatch & expiresInMatch){
             accessToken = accessTokenMatch[1];
+            console.log(accessToken)
             const expiresIn = Number(expiresInMatch[1]);
             window.setTimeout(() => accessToken = '', expiresIn * 1000);
             window.history.pushState('Access Token', null, '/');
@@ -23,7 +24,7 @@ const Spotify = {
     },
 
     search(term){
-        const accessToken = Spotify.getAcessToken;
+        const accessToken = Spotify.getAccessToken();
         return fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
             methdod: 'GET',
             headers: {
@@ -50,7 +51,7 @@ const Spotify = {
             return;
         }
 
-        const accessToken = Spotify.getAcessToken();
+        const accessToken = Spotify.getAccessToken();
         const headers = { Authorization: `Bearer ${accessToken}` };
         let userId;
 

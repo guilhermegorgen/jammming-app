@@ -8,7 +8,7 @@ import Spotify from './Spotify.js';
 
 
 function App() {
-  const [searchResult, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
 
@@ -47,7 +47,7 @@ function App() {
         <Header />
         <SearchBar onSearch={search}/>
         <div>
-          <SearchResults searchResults={searchResult} ondAdd={addTrack} />
+          <SearchResults searchResults={searchResults} ondAdd={addTrack} />
           <Playlist 
             playlistName = {playlistName}
             playlistTracks = {playlistTracks}
