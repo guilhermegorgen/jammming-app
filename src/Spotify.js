@@ -5,7 +5,7 @@ const code = params.get("code");
 let accessToken;
 
 const Spotify = {
-    async getAcessToken(clientId, code) {
+    getAcessToken(clientId, code) {
     const verifier = localStorage.getItem("verifier");
 
     const params = new URLSearchParams();
@@ -15,13 +15,13 @@ const Spotify = {
     params.append("redirect_uri", "http://127.0.0.1::5173/callback");
     params.append("code_verifier", verifier);
 
-    const result = await fetch("https://accounts.spotify.com/api/token", {
+    const result = fetch("https://accounts.spotify.com/api/token", {
         methods: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: params    
     });
 
-    const { access_token } = await result.json();
+    const { access_token } = result.json();
     return access_token;
     },
 
