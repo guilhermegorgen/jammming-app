@@ -10,7 +10,8 @@ const Spotify = {
         const endpoint = "https://accounts.spotify.com/authorize?";
         const clientPoint = `client_id=${clientId}`;
         const responseType = `response_type=code`;
-        const url = endpoint + clientPoint + responseType + redirectUri;
+        const scope = 'user-read-private user-read-email';
+        const url = `${endpoint}&${clientPoint}&${responseType}&${redirectUri}&scope=${scope}`;
         
         try {
             if(accessToken){
@@ -27,7 +28,7 @@ const Spotify = {
         const code = urlParams.get('code');
         const endpoint = "https://accounts.spotify.com/api/token";
         const grantType = "grant_type=authrization_code";
-        const url = endpoint + grantType + code + redirectUri;
+        const url = `${endpoint}&${grantType}&code=${code}&${redirectUri}`;
         
         const response = fetch(url, {
             method: "POST",
