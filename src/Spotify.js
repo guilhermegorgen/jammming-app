@@ -1,28 +1,25 @@
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
 const redirectUri = "http://127.0.0.1:8888/callback";
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
 let accessToken;
 
 const Spotify = {
-    getAcessToken(clientId, code) {
-    const verifier = localStorage.getItem("verifier");
+    getAcessToken(){
+        if(accessToken){
+            return accessToken;
+        }
 
-    const params = new URLSearchParams();
-    params.append("client_id", clientId);
-    params.append("grant_type", "authorization_code");
-    params.append("code", code);
-    params.append("redirect_uri", "http://127.0.0.1::5173/callback");
-    params.append("code_verifier", verifier);
-
-    const result = fetch("https://accounts.spotify.com/api/token", {
-        methods: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params    
-    });
-
-    const { access_token } = result.json();
-    return access_token;
+        const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+        const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
+        if (accessTokenMatch & expiresInMatch){
+            accessToken = accessTokenMatch[1];
+            const expiresIn = Number(expiresInMatch[1]);
+            window.setTimeout(() => accessToken = '', expiresIn * 1000);
+            window.history.pushState('Access Token', null, '/');
+            return accessToken;
+        } else {
+            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
+            window.location = accessUrl;
+        }
     },
 
     search(term){
