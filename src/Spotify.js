@@ -2,7 +2,7 @@ const { Buffer } = require('node:buffer');
 
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
 const clientSecret = "6579cea59aae4d5195ad8191cdaea1e3";
-const redirectUri = "redirect_uri=http://127.0.0.1:8888/callback";
+const redirectUri = "http://127.0.0.1:8888/callback";
 let accessToken;
 
 const Spotify = {
@@ -11,7 +11,7 @@ const Spotify = {
         const clientPoint = `client_id=${clientId}`;
         const responseType = `response_type=code`;
         const scope = 'user-read-private user-read-email';
-        const url = `${endpoint}${clientPoint}&${responseType}&${redirectUri}&scope=${scope}`;
+        const url = `${endpoint}${clientPoint}&${responseType}&redirect_uri=${redirectUri}&scope=${scope}`;
 
         return window.location = url;
     },
@@ -20,16 +20,18 @@ const Spotify = {
         Spotify.getUserAuhtorization();
         const urlParams = new URLSearchParams(window.location);
         const code = urlParams.get('code');
-        const endpoint = "https://accounts.spotify.com/api/token";
-        const grantType = "grant_type=authrization_code";
-        const url = `${endpoint}&${grantType}&code=${code}&${redirectUri}`;
+        const url = "https://accounts.spotify.com/api/token";
+        const grantType = "authrization_code";
+        const data = JSON.stringify({garant_type: grantType, code: code, redirect_uri: redirectUri})
         
         const response = fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Authorization": "Basic " + (new Buffer.from(clientId + ":" + clientSecret).toString('base64'))
-            }
+            },
+            body: data
+
         });
 
         const jsonResponse = response.json();
