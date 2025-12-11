@@ -1,5 +1,5 @@
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
-const redirectUri = "https://guilhermegorgen.github.io/jammming-app/callback";
+const redirectUri = "http://127.0.0.1:8888/callback";
 let accessToken;
 
 const Spotify = {
