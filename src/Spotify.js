@@ -24,7 +24,7 @@ const Spotify = {
 
     search(term){
         const accessToken = Spotify.getAcessToken();
-        return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+        return fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
