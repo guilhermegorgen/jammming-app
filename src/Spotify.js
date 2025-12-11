@@ -1,49 +1,67 @@
+const { Buffer } = require('node:buffer');
+
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
+const clientSecret = "6579cea59aae4d5195ad8191cdaea1e3";
 const redirectUri = "http://127.0.0.1:8888/callback";
 let accessToken;
 
 const Spotify = {
-    getAccessToken(){
-        if(accessToken){
-            return accessToken;
-        }
+    getUserAuhtorization(){
+        const endpoint = "https://accounts.spotify.com/authorize?";
+        const clientPoint = `client_id=${clientId}`;
+        const responseType = `response_type=code`;
+        const redirectPoint = `redirect_uri=${redirectUri}`;
+        const url = endpoint + clientPoint + responseType + redirectPoint;
+        
+        try {
+            if(accessToken){
+                return accessToken;
+            } else {
+                return window.location = url;
+            }
+        } catch(e) {console.log(e)}  
+    },
 
-        const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
-        const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
-        if (accessTokenMatch & expiresInMatch){
-            accessToken = accessTokenMatch[1];
-            console.log(accessToken)
-            const expiresIn = Number(expiresInMatch[1]);
-            window.setTimeout(() => accessToken = '', expiresIn * 1000);
-            window.history.pushState('Access Token', null, '/');
-            return accessToken;
-        } else {
-            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
-            window.location = accessUrl;
-        }
+    getAccessToken() {
+        Spotify.getUserAuhtorization();
+        const urlParams = new URLSearchParams(window.location);
+        const code = urlParams.get('code');
+        const endpoint = "https://accounts.spotify.com/api/token";
+        const grantType = "grant_type=authrization_code";
+        const url = endpoint + grantType + code + redirectUri;
+        
+        const response = fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Basic " + (new Buffer.from(clientId + ":" + clientSecret).toString('base64'))
+            }
+        });
+
+        const jsonResponse = response.json();
+        return jsonResponse 
     },
 
     search(term){
-        const accessToken = Spotify.getAccessToken();
-        return fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
+        const getAccessInformations = Spotify.getAccessToken();
+        const accessToken = getAccessInformations.access_token;
+        const response = fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
             methdod: 'GET',
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
-        }).then(response => {
-            return response.json();
-        }).then(jsonResponse => {
-            if(!jsonResponse.tracks){
-                return [];
-            }
-            return jsonResponse.tracks.items.map(track => ({
-                id: track.id,
-                name: track.name,
-                artist: track.artists[0].name,
-                album: track.album.name,
-                uri: track.uri
-            }));
         });
+        const jsonResponse = response.json();
+        if (!jsonResponse.tracks) {
+            return [];
+        }
+        return jsonResponse.tracks.items.map(track => ({
+            id: track.id,
+            name: track.name,
+            artist: track.artists[0].name,
+            album: track.album.name,
+            uri: track.uri
+        }));
     },
 
     savePlaylist(name, trackUris) {
@@ -51,7 +69,7 @@ const Spotify = {
             return;
         }
 
-        const accessToken = Spotify.getAccessToken();
+        const accessToken = Spotify.getAcessToken();
         const headers = { Authorization: `Bearer ${accessToken}` };
         let userId;
 
