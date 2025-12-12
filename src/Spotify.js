@@ -18,7 +18,7 @@ const Spotify = {
 
     async getAccessToken() {
         Spotify.getUserAuhtorization();
-        const urlParams = new URLSearchParams(window.location);
+        const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         const url = "https://accounts.spotify.com/api/token";
         const grantType = "authrization_code";
