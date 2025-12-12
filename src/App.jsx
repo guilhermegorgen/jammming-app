@@ -4,7 +4,7 @@ import Header from './components/Header/Header.jsx';
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import SearchResults from './components/SearchResults/SearchResults.jsx'
 import Playlist from './components/Playlist/Playlist.jsx'
-import Spotify from './Spotify.js';
+import { search, savePlaylist } from './Spotify.js';
 
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
 
-  const search = useCallback((term) => {
-    Spotify.search(term).then(setSearchResults)
+  const handleSearch = useCallback((term) => {
+    search(term).then(setSearchResults)
   }, []);
 
   const addTrack = useCallback((track) => {
@@ -33,9 +33,9 @@ function App() {
     setPlaylistName(name);
   }, []);
 
-  const savePlaylist = useCallback(() => {
+  const handleSavePlaylist = useCallback(() => {
     const trackUris = playlistTracks.map((track) => track.uri);
-    Spotify.savePlaylist(playlistName, trackUris).then(() => {
+    savePlaylist(playlistName, trackUris).then(() => {
       setPlaylistName("New Playlist");
       setPlaylistTracks([]);
     });
@@ -45,14 +45,14 @@ function App() {
     <>
       <div>
         <Header />
-        <SearchBar onSearch={search}/>
+        <SearchBar onSearch={handleSearch}/>
         <div>
           <SearchResults searchResults={searchResults} ondAdd={addTrack} />
           <Playlist 
             playlistName = {playlistName}
             playlistTracks = {playlistTracks}
             onNameChange = {updatePlaylistName}
-            onSave = {savePlaylist}
+            onSave = {handleSavePlaylist}
             onRemove = {removeTrack}
           />
         </div>
