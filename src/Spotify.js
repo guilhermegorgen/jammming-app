@@ -18,7 +18,7 @@ const getUserAuhtorization = () => {
 
 const getAccessToken = async () => {
     getUserAuhtorization();
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.href);
     const code = urlParams.get('code');
     console.log(code);
     const url = "https://accounts.spotify.com/api/token";
