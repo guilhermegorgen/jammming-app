@@ -18,11 +18,10 @@ const getUserAuhtorization = () => {
 
 const getAccessToken = async () => {
     getUserAuhtorization();
-    const urlParams = new URLSearchParams(window.location.href);
+    const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-    console.log(code);
     const url = "https://accounts.spotify.com/api/token";
-    const grantType = "authrization_code";
+    const grantType = "authorization_code";
     const data = JSON.stringify({ garant_type: grantType, code: code, redirect_uri: redirectUri })
 
     const response = await fetch(url, {
@@ -41,7 +40,6 @@ const getAccessToken = async () => {
 
 export const search = async (term) => {
     const getAccessInformations = getAccessToken();
-    console.log(getAccessInformations);
     const accessToken = getAccessInformations.access_token;
     const response = await fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
         methdod: 'GET',
