@@ -40,6 +40,7 @@ const getAccessToken = async () => {
 
 export const search = async (term) => {
     const getAccessInformations = getAccessToken();
+    console.log(getAccessInformations);
     const accessToken = getAccessInformations.access_token;
     const response = await fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`, {
         methdod: 'GET',
