@@ -27,7 +27,7 @@ const getAccessToken = async () => {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": `Basic ${authorizationInfo.toString('base64')}`
+            "Authorization": `Basic ${authorizationInfo}`
         },
         body: data
 
