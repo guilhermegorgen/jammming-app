@@ -1,5 +1,3 @@
-import { Buffer } from 'node:buffer';
-
 const clientId = 'e27bcceb0b7643ea9fb07295db107f0e';
 const clientSecret = "6579cea59aae4d5195ad8191cdaea1e3";
 const redirectUri = "http://127.0.0.1:8888/callback";
@@ -23,12 +21,13 @@ const getAccessToken = async () => {
     const url = "https://accounts.spotify.com/api/token";
     const grantType = "authorization_code";
     const data = JSON.stringify({ garant_type: grantType, code: code, redirect_uri: redirectUri })
+    const authorizationInfo = clientId + ':' + clientSecret;
 
     const response = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": `Basic ${new Buffer.from(clientId + ":" + clientSecret).toString('base64')}`
+            "Authorization": `Basic ${authorizationInfo.toString('base64')}`
         },
         body: data
 
